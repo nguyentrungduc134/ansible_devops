@@ -48,4 +48,11 @@ docker_yum_gpg_key: "{{ docker_repo_url }}/centos/gpg"
 docker_users: []
 
 # Docker daemon options as a dict
-docker_daemon_options: {}
+docker_daemon_options: {
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2"
+}

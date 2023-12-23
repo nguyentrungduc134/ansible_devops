@@ -9,8 +9,8 @@ kubernetes_packages:
   - name: kubernetes-cni
     state: present
 
-kubernetes_version: '1.25'
-kubernetes_version_rhel_package: '1.25.1'
+kubernetes_version: '1.28'
+kubernetes_version_rhel_package: '1.28.1'
 
 kubernetes_role: control_plane
 
@@ -29,12 +29,14 @@ kubernetes_pod_network:
   # cidr: '192.168.0.0/16'
 
 kubernetes_kubeadm_kubelet_config_file_path: '/etc/kubernetes/kubeadm-kubelet-config.yaml'
-kubernetes_config_kubelet_configuration:
-  cgroupDriver: "cgroupfs"
+kubernetes_config_kubelet_configuration: {}
+#  cgroupDriver: "cgroupfs"
 
 kubernetes_config_init_configuration:
   localAPIEndpoint:
     advertiseAddress: "{{ kubernetes_apiserver_advertise_address | default(ansible_default_ipv4.address, true) }}"
+  nodeRegistration:
+    criSocket: "unix:///run/cri-dockerd.sock"
 # if you use the next lines, remove the command line argument below
 # nodeRegistration:
 #    ignorePreflightErrors:
@@ -49,7 +51,7 @@ kubernetes_config_kube_proxy_configuration: {}
 
 kubernetes_apiserver_advertise_address: ''
 kubernetes_version_kubeadm: 'stable-{{ kubernetes_version }}'
-kubernetes_ignore_preflight_errors: 'all'
+kubernetes_ignore_preflight_errors: ""
 
 kubernetes_apt_release_channel: main
 # Note that xenial repo is used for all Debian derivatives at this time.

@@ -16,7 +16,7 @@
       tags: ['swap', 'kubernetes']
 
     - role: geerlingguy.docker
-      tags: ['docker','run']
+      tags: ['docker']
 
     - role: geerlingguy.kubernetes
-      tags: ['kubernetes']
+      tags: ['kubernetes','run']

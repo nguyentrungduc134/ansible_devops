@@ -9,6 +9,10 @@
     src: "kubeadm-kubelet-config.j2"
     dest: "{{ kubernetes_kubeadm_kubelet_config_file_path }}"
 
+- name: pull container images for init pods
+  command: >
+    sudo kubeadm config images pull --cri-socket=unix:///var/run/cri-dockerd.sock
+
 - name: Initialize Kubernetes control plane with kubeadm init
   command: >
     kubeadm init
@@ -30,7 +34,7 @@
   debug:
     var: kubeadmin_init.stdout
     verbosity: 2
-  when: not kubernetes_init_stat.stat.exists
+  #when: not kubernetes_init_stat.stat.exists
 
 - name: Ensure .kube directory exists.
   file:

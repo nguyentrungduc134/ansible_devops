@@ -48,7 +48,7 @@
 - name: Set the kubeadm join command globally.
   set_fact:
     kubernetes_join_command: >
-      {{ kubernetes_join_command_result.stdout }}
+      {{ kubernetes_join_command_result.stdout }} --cri-socket unix:///var/run/cri-dockerd.sock
       {{ kubernetes_join_command_extra_opts }}
   when: kubernetes_join_command_result.stdout is defined
   delegate_to: "{{ item }}"

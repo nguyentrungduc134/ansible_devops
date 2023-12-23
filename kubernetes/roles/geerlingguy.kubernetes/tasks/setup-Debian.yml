@@ -1,4 +1,7 @@
----
+
+- name: Update all Debian/Ubuntu packages to their latest version
+  ansible.builtin.apt:
+    update_cache: yes
 - name: Ensure dependencies are installed.
   apt:
     name:
@@ -19,8 +22,10 @@
     state: present
     update_cache: true
 
+ 
 - name: Add Kubernetes apt preferences file to pin a version.
   template:
     src: apt-preferences-kubernetes.j2
     dest: /etc/apt/preferences.d/kubernetes
     mode: 0644
+  tags: always
